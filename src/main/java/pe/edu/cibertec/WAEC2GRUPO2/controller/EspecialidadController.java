@@ -44,14 +44,7 @@ public class EspecialidadController {
         String mensaje = "Especialidad registrada con éxito";
         boolean respuesta = true;
         try{
-            Especialidad especialidad = new Especialidad();
-            especialidad.setTitulo(especialidadRequest.getTitulo());
-            especialidad.setFuncion(especialidadRequest.getFuncion());
-            especialidad.setFechgraduacion(sumarUnDiasMas(especialidadRequest.getFechgraduacion()));
-            Medico medico = new Medico();
-            medico.setIdmedico(especialidadRequest.getIdmedico());
-            especialidad.setMedico(medico);
-            iEspecialidadService.registrarEspecialidad(especialidad);
+            iEspecialidadService.registrarEspecialidad(especialidadRequest);
         } catch(Exception ex){
             mensaje = "Error: " + ex.getMessage();
             respuesta = false;
@@ -65,15 +58,7 @@ public class EspecialidadController {
         String mensaje = "Especialidad actualizada con éxito";
         boolean respuesta = true;
         try{
-            Especialidad especialidad = new Especialidad();
-            especialidad.setIdespecialidad(especialidadRequest.getIdespecialidad());
-            especialidad.setTitulo(especialidadRequest.getTitulo());
-            especialidad.setFuncion(especialidadRequest.getFuncion());
-            especialidad.setFechgraduacion(sumarUnDiasMas(especialidadRequest.getFechgraduacion()));
-            Medico medico = new Medico();
-            medico.setIdmedico(especialidadRequest.getIdmedico());
-            especialidad.setMedico(medico);
-            iEspecialidadService.registrarEspecialidad(especialidad);
+            iEspecialidadService.registrarEspecialidad(especialidadRequest);
         } catch(Exception ex){
             mensaje = "Error: " + ex.getMessage();
             respuesta = false;
@@ -93,12 +78,5 @@ public class EspecialidadController {
             respuesta = false;
         }
         return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
-    }
-
-    private Date sumarUnDiasMas(Date fecha){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fecha);
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        return calendar.getTime();
     }
 }
