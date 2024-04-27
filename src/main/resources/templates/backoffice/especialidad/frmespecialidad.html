@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Mantenimiento Especialidad</title>
     <th:block th:replace="~{layout::bootstrap}"></th:block>
+    <th:block th:replace="~{layout::jquery}"></th:block>
+    <script th:src="@{/js/web/backoffice/especialidad/frmespecialidad.js}" type="text/javascript"></script>
 </head>
 <body>
     <nav th:replace="~{layout::menu}"></nav>
@@ -12,9 +14,9 @@
             <h3>Mantenimiento de Especialidades</h3>
             <hr />
             <div class="mb-3">
-                <button type="button" class="btn btn-success">Nueva Especialidad</button>
+                <button id="btnregistrar" type="button" class="btn btn-success">Nueva Especialidad</button>
             </div>
-            <div class="mb-3" id="msjresultado">
+            <div class="mb-3 container col-5 m-auto" id="msjresultado">
 
             </div>
             <table id="tblespecialidad" class="table table-bordered table-striped">
@@ -27,7 +29,29 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    <tr th:each="especialidad: ${listaEspecialidades}">
+                        <td th:text="${especialidad.medico.apemedico + ' ' + especialidad.medico.nommedico}"></td>
+                        <td th:text="${especialidad.titulo}"></td>
+                        <td class="text-center" th:text="${especialidad.fechgraduacion}"></td>
+                        <td class="text-center">
+                            <button style="width: 100px" type="button" class="btn btn-success btnleer"
+                                    th:data-espid="${especialidad.idespecialidad}">
+                                Ver
+                            </button>
+                        </td>
+                        <td class="text-center">
+                            <button style="width: 100px" type="button" class="btn btn-primary btnactualizar"
+                                    th:data-espid="${especialidad.idespecialidad}">
+                                Actualizar
+                            </button>
+                        </td>
+                        <td class="text-center">
+                            <button style="width: 100px" type="button" class="btn btn-danger btneliminar"
+                                    th:data-espid="${especialidad.idespecialidad}">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -42,10 +66,31 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="hddidespecialidad" value="0">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="txttitulo" placeholder="Título">
+                        <label for="txttitulo">Título</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea style="height: 150px; resize: none" class="form-control" id="txtfuncion" placeholder="Función"></textarea>
+                        <label for="txtfuncion">Función</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="txtfechgraduacion" placeholder="Fecha de Graduación">
+                        <label for="txtfechgraduacion">Fecha de Graduación</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="cbomedico" aria-label="Floating label select example">
 
+                        </select>
+                        <label for="cbomedico">Médico</label>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" id="btnguardar">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btncerrar"></button>
+                    <button type="button" class="btn btn-primary" id="btnactualizar">Actualizar</button>
+                    <button type="button" class="btn btn-danger" id="btneliminar">Eliminar</button>
                 </div>
             </div>
         </div>
