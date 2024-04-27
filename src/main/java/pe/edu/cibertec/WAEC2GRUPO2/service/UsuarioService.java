@@ -37,4 +37,11 @@ public class UsuarioService implements IUsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    @Override
+    public void actualizarPassword(String nuevoPassword, String nomusuario) {
+        Usuario usuario = this.findUserByNomUsuario(nomusuario);
+        String ecriptado = bCryptPasswordEncoder.encode(nuevoPassword);
+        usuarioRepository.actualizarPassowrd(ecriptado, usuario.getIdusuario());
+    }
+
 }

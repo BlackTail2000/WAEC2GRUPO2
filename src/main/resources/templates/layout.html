@@ -28,9 +28,13 @@
                             Operaciones
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="@{/}">Cambiar Password</a></li>
+                            <li><a class="dropdown-item" th:href="@{/auth/cambiarPassword}">Cambiar Password</a></li>
                             <li><a class="dropdown-item" th:href="@{/especialidad}">Mantenimiento</a></li>
-                            <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                            <li>
+                                <form th:action="@{/logout}" method="post">
+                                    <input type="submit" class="dropdown-item" value="Cerrar Sesión">
+                                </form>
+                            </li>
                         </ul>
                     </li>
                 </ul>
