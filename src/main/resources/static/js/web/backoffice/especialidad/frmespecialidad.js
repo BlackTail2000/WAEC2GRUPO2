@@ -13,6 +13,7 @@ $(document).on("click", "#btnregistrar", function(){
     $("#btncerrar").hide();
     $("#btnactualizar").hide();
     $("#btneliminar").hide();
+    $("#msjerror").hide();
     $("#modalespecialidad").modal("show");
 })
 
@@ -22,6 +23,7 @@ $(document).on("click", "#btnguardar", function(){
         url: "/especialidad/registro",
         contentType: "application/json",
         data: JSON.stringify({
+            idespecialidad: $("#hddidespecialidad").val(),
             titulo: $("#txttitulo").val(),
             funcion: $("#txtfuncion").val(),
             fechgraduacion: $("#txtfechgraduacion").val(),
@@ -30,13 +32,18 @@ $(document).on("click", "#btnguardar", function(){
         success: function(resultado){
             if(resultado.respuesta){
                 listarEspecialidades();
+                $("#msjerror").hide();
+                $("#msjresultado").html("");
+                $("#msjresultado").append(
+                    `<div class="alert alert-success text-center" role="alert">${resultado.mensaje}` +
+                    `</div>`
+                );
                 $("#modalespecialidad").modal("hide");
+            } else {
+                $("#msjerror").show();
+                $("#msjerror").html("");
+                $("#msjerror").html(resultado.mensaje);
             }
-            $("#msjresultado").html("");
-            $("#msjresultado").append(
-                `<div class="alert alert-success text-center" role="alert">${resultado.mensaje}` +
-                `</div>`
-            )
         }
     })
 })
@@ -56,13 +63,18 @@ $(document).on("click", "#btnactualizar", function(){
         success: function(resultado){
             if(resultado.respuesta){
                 listarEspecialidades();
+                $("#msjresultado").html("");
+                $("#msjresultado").append(
+                    `<div class="alert alert-primary text-center" role="alert">${resultado.mensaje}` +
+                    `</div>`
+                );
                 $("#modalespecialidad").modal("hide");
+            } else {
+                $("#msjerror").show();
+                $("#msjerror").html("");
+                $("#msjerror").html(resultado.mensaje);
             }
-            $("#msjresultado").html("");
-            $("#msjresultado").append(
-                `<div class="alert alert-primary text-center" role="alert">${resultado.mensaje}` +
-                `</div>`
-            )
+
         }
     })
 })
@@ -107,6 +119,7 @@ $(document).on("click", ".btnleer", function(){
             $("#btnactualizar").hide();
             $("#btneliminar").hide();
             $("#btncerrar").html("Aceptar");
+            $("#msjerror").hide();
         }
     });
     $("#modalespecialidad").modal("show");
@@ -132,6 +145,7 @@ $(document).on("click", ".btnactualizar", function(){
             $("#btncerrar").hide();
             $("#btnactualizar").show();
             $("#btneliminar").hide();
+            $("#msjerror").hide();
         }
     });
     $("#modalespecialidad").modal("show");
@@ -158,6 +172,7 @@ $(document).on("click", ".btneliminar", function(){
             $("#btncerrar").html("Cancelar");
             $("#btnactualizar").hide();
             $("#btneliminar").show();
+            $("#msjerror").hide();
         }
     });
     $("#modalespecialidad").modal("show");
