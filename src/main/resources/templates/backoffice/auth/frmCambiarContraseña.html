@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <th:block th:replace="~{layout::bootstrap}"></th:block>
 </head>
 <body>
 <div class="card">
@@ -10,16 +11,16 @@
         Cambiar Contraseña
     </div>
     <div class="card-body">
-        <form th:action="@{/auth/login}" method="post">
+        <form th:action="@{/auth/CambiarPassword}" method="post">
             <div class="mb-3">
                 <label for="password1" class="form-label">Nueva Contraseña</label>
                 <input maxlength="15" type="password" class="form-control"
-                       name="password" id="password1">
+                       name="password1" id="password1">
             </div>
             <div class="mb-3">
                 <label for="password2" class="form-label">Repita la contraseña</label>
                 <input maxlength="15" type="password" class="form-control"
-                       name="password" id="password2">
+                       name="password2" id="password2">
             </div>
             <button type="submit" id="btningresar" class="btn btn-primary">
                 <i class="fas fa-save"></i>
