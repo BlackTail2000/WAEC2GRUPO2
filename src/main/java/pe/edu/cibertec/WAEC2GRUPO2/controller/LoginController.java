@@ -6,8 +6,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pe.edu.cibertec.WAEC2GRUPO2.model.bd.Usuario;
 import pe.edu.cibertec.WAEC2GRUPO2.model.dto.security.UsuarioSecurity;
 import pe.edu.cibertec.WAEC2GRUPO2.service.UsuarioService;
 
@@ -24,8 +28,15 @@ public class LoginController {
     }
 
     @GetMapping("/registrar")
-    public String registrar(){
+    public String registrar(Model model){
+        model.addAttribute("nuevoUsuario", new Usuario());
         return "backoffice/auth/frmRegistroUsuario";
+    }
+
+    @PostMapping("/guardarUsuario")
+    public String guardarUsuario(@ModelAttribute("nuevoUsuario") Usuario nuevoUsuario){
+        usuarioService.guardarNuevoUsuario(nuevoUsuario);
+        return "redirect:/auth/login";
     }
 
     @GetMapping("/login-success")
