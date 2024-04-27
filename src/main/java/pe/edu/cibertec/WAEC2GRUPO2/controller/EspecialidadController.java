@@ -10,6 +10,8 @@ import pe.edu.cibertec.WAEC2GRUPO2.model.dto.request.EspecialidadRequest;
 import pe.edu.cibertec.WAEC2GRUPO2.model.dto.response.ResultadoResponse;
 import pe.edu.cibertec.WAEC2GRUPO2.service.IEspecialidadService;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -45,7 +47,7 @@ public class EspecialidadController {
             Especialidad especialidad = new Especialidad();
             especialidad.setTitulo(especialidadRequest.getTitulo());
             especialidad.setFuncion(especialidadRequest.getFuncion());
-            especialidad.setFechgraduacion(especialidadRequest.getFechgraduacion());
+            especialidad.setFechgraduacion(sumarUnDiasMas(especialidadRequest.getFechgraduacion()));
             Medico medico = new Medico();
             medico.setIdmedico(especialidadRequest.getIdmedico());
             especialidad.setMedico(medico);
@@ -67,7 +69,7 @@ public class EspecialidadController {
             especialidad.setIdespecialidad(especialidadRequest.getIdespecialidad());
             especialidad.setTitulo(especialidadRequest.getTitulo());
             especialidad.setFuncion(especialidadRequest.getFuncion());
-            especialidad.setFechgraduacion(especialidadRequest.getFechgraduacion());
+            especialidad.setFechgraduacion(sumarUnDiasMas(especialidadRequest.getFechgraduacion()));
             Medico medico = new Medico();
             medico.setIdmedico(especialidadRequest.getIdmedico());
             especialidad.setMedico(medico);
@@ -91,5 +93,12 @@ public class EspecialidadController {
             respuesta = false;
         }
         return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
+    }
+
+    private Date sumarUnDiasMas(Date fecha){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTime();
     }
 }
