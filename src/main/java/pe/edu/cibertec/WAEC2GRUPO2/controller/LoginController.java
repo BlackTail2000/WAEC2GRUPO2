@@ -63,9 +63,11 @@ public class LoginController {
     @PostMapping("/cambiarPassword")
     public String cambiarPassword(@RequestParam("password1") String password1,
                                   @RequestParam("password2") String password2,
-                                  HttpServletRequest request){
+                                  HttpServletRequest request,
+                                  Model model){
         HttpSession session = request.getSession();
         if(!password1.equals(password2)){
+            model.addAttribute("error", "Las contraseñas no coinciden");
             return "backoffice/auth/frmCambiarContraseña";
         } else {
             usuarioService.actualizarPassword(password1, session.getAttribute("username").toString());

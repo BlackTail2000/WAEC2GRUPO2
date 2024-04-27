@@ -32,7 +32,7 @@ public class UsuarioService implements IUsuarioService {
     public Usuario guardarNuevoUsuario(Usuario usuario) {
         usuario.setActivo(true);
         usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
-        Rol usuarioRol = rolRepository.findByNomRol("ADMIN");
+        Rol usuarioRol = rolRepository.findByNomrol("ADMIN");
         usuario.setRoles(new HashSet<>(Arrays.asList(usuarioRol)));
         return usuarioRepository.save(usuario);
     }

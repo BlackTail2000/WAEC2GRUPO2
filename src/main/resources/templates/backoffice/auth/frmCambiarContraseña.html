@@ -11,7 +11,7 @@
         Cambiar Contraseña
     </div>
     <div class="card-body">
-        <form th:action="@{/auth/CambiarPassword}" method="post">
+        <form th:action="@{/auth/cambiarPassword}" method="post">
             <div class="mb-3">
                 <label for="password1" class="form-label">Nueva Contraseña</label>
                 <input maxlength="15" type="password" class="form-control"
@@ -26,6 +26,9 @@
                 <i class="fas fa-save"></i>
                 Guardar</button>
         </form>
+        <div th:if="${error}" th:text="${error}" class="alert alert-danger mt-3" role="alert">
+
+        </div>
     </div>
 </div>
 </body>

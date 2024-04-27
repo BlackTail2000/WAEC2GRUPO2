@@ -29,6 +29,9 @@
             <a class="btn btn-primary" th:href="@{/auth/registrar}"
                role="button">REGISTRARSE</a>
         </form>
+        <div th:if="${param.error}" class="alert alert-danger mt-3" role="alert">
+            Usuario y/o contraseña incorrectos
+        </div>
     </div>
 </div>
 </body>
