@@ -5,7 +5,13 @@ $(document).on("click", "#btnregistrar", function(){
     $("#txtfechgraduacion").val("");
     $("#hddidespecialidad").val("0");
     cargarCboMedico(0);
+    $("#txttitulo").prop("readonly", false);
+    $("#txtfuncion").prop("readonly", false);
+    $("#txtfechgraduacion").prop("readonly", false);
+    $("#cbomedico").prop("disabled", false);
+    $("#btnguardar").show();
     $("#btncerrar").hide();
+    $("#btnactualizar").hide();
     $("#modalespecialidad").modal("show");
 })
 
@@ -32,6 +38,81 @@ $(document).on("click", "#btnguardar", function(){
             )
         }
     })
+})
+
+$(document).on("click", "#btnactualizar", function(){
+    $.ajax({
+        type: "PUT",
+        url: "/especialidad/actualizacion",
+        contentType: "application/json",
+        data: JSON.stringify({
+            idespecialidad: $("#hddidespecialidad").val(),
+            titulo: $("#txttitulo").val(),
+            funcion: $("#txtfuncion").val(),
+            fechgraduacion: $("#txtfechgraduacion").val(),
+            idmedico: $("#cbomedico").val(),
+        }),
+        success: function(resultado){
+            if(resultado.respuesta){
+                listarEspecialidades();
+                $("#modalespecialidad").modal("hide");
+            }
+            $("#msjresultado").html("");
+            $("#msjresultado").append(
+                `<div class="alert alert-primary text-center" role="alert">${resultado.mensaje}` +
+                `</div>`
+            )
+        }
+    })
+})
+
+$(document).on("click", ".btnleer", function(){
+    $.ajax({
+        type: "GET",
+        url: "/especialidad/obtener/" + $(this).attr("data-espid"),
+        dataType: "json",
+        success: function(resultado){
+            $("#exampleModalLabel").html("Especialidad Nro. " + resultado.idespecialidad);
+            $("#txttitulo").val(resultado.titulo);
+            $("#txtfuncion").val(resultado.funcion);
+            $("#txtfechgraduacion").val(resultado.fechgraduacion);
+            $("#hddidespecialidad").val(resultado.idespecialidad);
+            cargarCboMedico(resultado.medico.idmedico);
+            $("#txttitulo").prop("readonly", true);
+            $("#txtfuncion").prop("readonly", true);
+            $("#txtfechgraduacion").prop("readonly", true);
+            $("#cbomedico").prop("disabled", true);
+            $("#btnguardar").hide();
+            $("#btncerrar").show();
+            $("#btnactualizar").hide();
+            $("#btncerrar").html("Aceptar");
+        }
+    });
+    $("#modalespecialidad").modal("show");
+})
+
+$(document).on("click", ".btnactualizar", function(){
+    $.ajax({
+        type: "GET",
+        url: "/especialidad/obtener/" + $(this).attr("data-espid"),
+        dataType: "json",
+        success: function(resultado){
+            $("#exampleModalLabel").html("Actualizar Especialidad");
+            $("#txttitulo").val(resultado.titulo);
+            $("#txtfuncion").val(resultado.funcion);
+            $("#txtfechgraduacion").val(resultado.fechgraduacion);
+            $("#hddidespecialidad").val(resultado.idespecialidad);
+            cargarCboMedico(resultado.medico.idmedico);
+            $("#txttitulo").prop("readonly", false);
+            $("#txtfuncion").prop("readonly", false);
+            $("#txtfechgraduacion").prop("readonly", false);
+            $("#cbomedico").prop("disabled", false);
+            $("#btnguardar").hide();
+            $("#btncerrar").hide();
+            $("#btnactualizar").show();
+        }
+    });
+    $("#modalespecialidad").modal("show");
 })
 
 function cargarCboMedico(idmedico){
